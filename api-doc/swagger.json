@@ -1,0 +1,2376 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "[DRAFT] Here is the documentation of the Hotel-Spider CRS API version 2. An API key is mandatory for each call described below. [/DRAFT]",
+    "version" : "2.0",
+    "title" : "[WIP] Hotel-Spider CRS API",
+    "termsOfService" : "http://www.hotel-spider.com",
+    "contact" : {
+      "email" : "dev@hotel-spider.ch"
+    }
+  },
+  "host" : "crs.hotel-spider.ch",
+  "basePath" : "/v2",
+  "tags" : [ {
+    "name" : "Descriptive info",
+    "description" : "All the static information at the hotel and room level: names, descriptions, pictures, amenities, etc."
+  }, {
+    "name" : "Availability summary",
+    "description" : "Summarized information regarding the availabilities, rates and inventories. To be used to display the calendar."
+  }, {
+    "name" : "Availabilities",
+    "description" : "All dynamic information regarding the availabilities, rates and inventories"
+  }, {
+    "name" : "Cancellation policies and penalties",
+    "description" : "Cancellation policies are the conditions that apply when a cancellation is requested (e.g. penalties)"
+  }, {
+    "name" : "Reservations",
+    "description" : "Calls relative to reservations"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/descriptive-info/{lang}/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Descriptive info" ],
+        "summary" : "returns the descriptive info for a given hotel",
+        "description" : "For more information about the code used in the returned data, please see the links below:\n- for the hotel services/amenities see the [Hotel Amenity Code (HAC)](https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325557/Hotel+Amenity+Code+HAC) list\n- for the room amenities see the [Room Amenity Type (RMA)](https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325585/Room+Amenity+Type+RMA) list",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "description" : "Language",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+        }, {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Hotel descriptive info",
+            "schema" : {
+              "$ref" : "#/definitions/HotelDescriptiveInfo"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/products/{lang}/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Descriptive info" ],
+        "summary" : "returns the products sold by a given hotel",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "description" : "Language",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+        }, {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Hotel products list",
+            "schema" : {
+              "$ref" : "#/definitions/HotelProducts"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/best-availabilities/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Availability summary" ],
+        "summary" : "returns the available products for the given period",
+        "description" : "",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "Start date of the requested timespan",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "End date of the requested timespan",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Best availabilities information",
+            "schema" : {
+              "$ref" : "#/definitions/BestAvailabilityResults"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/availabilities/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Availabilities" ],
+        "summary" : "returns the available products for the given search parameters",
+        "description" : "",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "Start date of the stay (date of arrival)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "End date of the stay (date of departure)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "nbAdults",
+          "in" : "query",
+          "description" : "Number of adults for the stay",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nbChildren",
+          "in" : "query",
+          "description" : "Number of children for the stay",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nbInfants",
+          "in" : "query",
+          "description" : "Number of infants for the stay",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Availability info",
+            "schema" : {
+              "$ref" : "#/definitions/AvailabilityResults"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Availabilities" ],
+        "summary" : "check the availability of a product at specific date",
+        "description" : "Before a user starts to enter his credit card details, you can check that the selected product is still available. This can be done using this call.",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "RoomStay",
+          "description" : "RoomStay data with associated services to be checked",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RoomStay"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Availability check response",
+            "schema" : {
+              "$ref" : "#/definitions/AvailabilityCheckResult"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/services/{lang}/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Availabilities" ],
+        "summary" : "returns the available services for the given search parameters",
+        "description" : "",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "description" : "Language",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+        }, {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "roomId",
+          "in" : "query",
+          "description" : "ID of the room type",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "rateplanId",
+          "in" : "query",
+          "description" : "ID of the rate plan",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "Start date of the stay (date of arrival)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "End date of the stay (date of departure)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "nbAdults",
+          "in" : "query",
+          "description" : "Number of adults for the stay",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nbChildren",
+          "in" : "query",
+          "description" : "Number of children for the stay",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "nbInfants",
+          "in" : "query",
+          "description" : "Number of infants for the stay",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Available services",
+            "schema" : {
+              "$ref" : "#/definitions/ServiceResults"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/cancel-penalties/{lang}/{hotelId}" : {
+      "get" : {
+        "tags" : [ "Cancellation policies and penalties" ],
+        "summary" : "get the cancellation penalties for a given stay",
+        "description" : "",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "description" : "Language",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+        }, {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "roomId",
+          "in" : "query",
+          "description" : "ID of the room type",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "rateplanId",
+          "in" : "query",
+          "description" : "ID of the rate plan",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "Start date of the stay (date of arrival)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "End date of the stay (date of departure)",
+          "required" : true,
+          "type" : "string",
+          "format" : "date"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Return a summary of the cancellation penalties that applies to the specified product at the specified dates",
+            "schema" : {
+              "$ref" : "#/definitions/CancelPenalties"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/reservations/{lang}/{hotelId}/{reservationId}" : {
+      "get" : {
+        "tags" : [ "Reservations" ],
+        "summary" : "get a specific reservation",
+        "description" : "",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "lang",
+          "in" : "path",
+          "description" : "Language",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+        }, {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "reservationId",
+          "in" : "path",
+          "description" : "ID of the reservation",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns the reservation object",
+            "schema" : {
+              "$ref" : "#/definitions/Reservation"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          },
+          "404" : {
+            "description" : "Resource not found"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/reservations/{hotelId}/actions/book" : {
+      "post" : {
+        "tags" : [ "Reservations" ],
+        "summary" : "make a reservation",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "Reservation",
+          "description" : "Information about the reservation to be booked",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/Definitions/ReservationRequest"
+          }
+        } ],
+        "responses" : {
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/reservations/{hotelId}/actions/cancel" : {
+      "post" : {
+        "tags" : [ "Reservations" ],
+        "summary" : "cancel a reservation",
+        "parameters" : [ {
+          "name" : "hotelId",
+          "in" : "path",
+          "description" : "ID of the hotel",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "401" : {
+            "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "api_key",
+      "in" : "query"
+    }
+  },
+  "definitions" : {
+    "HotelDescriptiveInfo" : {
+      "type" : "object",
+      "properties" : {
+        "hotelId" : {
+          "type" : "string",
+          "example" : "00U5846e022f291e",
+          "description" : "The hotel ID."
+        },
+        "hotelName" : {
+          "type" : "string",
+          "example" : "Test hotel",
+          "description" : "The hotel name."
+        },
+        "areaUnitOfMeasureCode" : {
+          "type" : "integer",
+          "example" : 14,
+          "description" : "Provides the unit of measure in which area is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM)."
+        },
+        "distanceUnitOfMeasureCode" : {
+          "type" : "integer",
+          "example" : 2,
+          "description" : "Provides the unit of measure in which distance is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM)."
+        },
+        "timeZone" : {
+          "type" : "string",
+          "example" : "Europe/Zurich",
+          "description" : "Describes the local time zone in which the hotel is located. This could include additional information regarding time zones (e.g., Daylight Saving Time observed), a proprietary code, the difference between the local time and GMT."
+        },
+        "weightUnitOfMeasureCode" : {
+          "type" : "integer",
+          "example" : 16,
+          "description" : "Provides the unit of measure in which weight is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM)."
+        },
+        "currencyCode" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        },
+        "hotelInfo" : {
+          "$ref" : "#/definitions/HotelInfo"
+        },
+        "affiliationInfo" : {
+          "$ref" : "#/definitions/HotelDescriptiveInfo_affiliationInfo"
+        },
+        "facilityInfo" : {
+          "$ref" : "#/definitions/HotelDescriptiveInfo_facilityInfo"
+        },
+        "contactInfos" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ContactInfo"
+          }
+        },
+        "policies" : {
+          "$ref" : "#/definitions/HotelDescriptiveInfo_policies"
+        }
+      },
+      "example" : {
+        "hotelInfo" : {
+          "whenBuilt" : "1969",
+          "position" : {
+            "altitude" : 150.0,
+            "latitude" : 47.444546,
+            "longitude" : 4.161718
+          },
+          "services" : [ "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]", "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]" ],
+          "descriptions" : {
+            "multimediadescriptions" : [ {
+              "images" : [ {
+                "imageWidth" : 350,
+                "imageId" : "00L55eee8ef46e5b",
+                "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+                "sort" : 1,
+                "dimensionCategory" : "Mobile",
+                "imageHeight" : 150
+              }, {
+                "imageWidth" : 350,
+                "imageId" : "00L55eee8ef46e5b",
+                "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+                "sort" : 1,
+                "dimensionCategory" : "Mobile",
+                "imageHeight" : 150
+              } ],
+              "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+            }, {
+              "images" : [ {
+                "imageWidth" : 350,
+                "imageId" : "00L55eee8ef46e5b",
+                "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+                "sort" : 1,
+                "dimensionCategory" : "Mobile",
+                "imageHeight" : 150
+              }, {
+                "imageWidth" : 350,
+                "imageId" : "00L55eee8ef46e5b",
+                "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+                "sort" : 1,
+                "dimensionCategory" : "Mobile",
+                "imageHeight" : 150
+              } ],
+              "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+            } ]
+          }
+        },
+        "facilityInfo" : {
+          "guestRooms" : [ {
+            "id" : "00U5846e022f2911",
+            "roomTypeName" : "Junior Suite",
+            "minOccupancy" : 1,
+            "maxOccupancy" : 2,
+            "maxChildOccupancy" : 1,
+            "maxAdultOccupancy" : 2,
+            "typeRoom" : {
+              "standardOccupancy" : 1,
+              "standardNumBeds" : 1,
+              "maxCribs" : 1,
+              "maxRollaways" : 0,
+              "composite" : false,
+              "quantity" : 26
+            },
+            "amenities" : [ {
+              "roomAmenityCode" : 2,
+              "codeDetails" : "Air conditioning"
+            }, {
+              "roomAmenityCode" : 55,
+              "codeDetails" : "Iron"
+            } ],
+            "multimediaDescriptions" : {
+              "images" : [ {
+                "imageId" : "00U5846e022f2915",
+                "imageUrl" : "http://images.example.com/00U5846e022f2915.jpg",
+                "imageWidth" : 1920,
+                "imageHeight" : 1080,
+                "dimensionCategory" : "Desktop"
+              }, {
+                "imageId" : "00U5846e022e4567",
+                "imageUrl" : "http://images.example.com/00U5846e022e4567.jpg",
+                "imageWidth" : 720,
+                "imageHeight" : 480,
+                "dimensionCategory" : "Mobile"
+              }, {
+                "imageId" : "00U5846e022f2916",
+                "imageUrl" : "http://images.example.com/00U5846e022f2916.jpg",
+                "imageWidth" : 1920,
+                "imageHeight" : 1080,
+                "dimensionCategory" : "Desktop"
+              } ]
+            }
+          }, {
+            "id" : "00U5846e022f2912",
+            "roomTypeName" : "Double deluxe",
+            "minOccupancy" : 1,
+            "maxOccupancy" : 3,
+            "maxChildOccupancy" : 2,
+            "maxAdultOccupancy" : 3,
+            "typeRoom" : {
+              "standardOccupancy" : 2,
+              "standardNumBeds" : 1,
+              "maxCribs" : 1,
+              "maxRollaways" : 0,
+              "composite" : false,
+              "quantity" : 14
+            }
+          } ]
+        },
+        "affiliationInfo" : {
+          "awards" : [ {
+            "provider" : "HotelAssociation",
+            "rating" : 3
+          }, {
+            "provider" : "TripAdvisor",
+            "rating" : 3.5
+          } ]
+        },
+        "weightUnitOfMeasureCode" : 16,
+        "contactInfos" : [ {
+          "emails" : [ {
+            "email" : "first.last@example.com"
+          }, {
+            "email" : "first.last@example.com"
+          } ],
+          "addresses" : [ {
+            "stateProv" : "Wallis",
+            "cityName" : "Zermatt",
+            "postalCode" : "3920",
+            "countryName" : "Schweiz",
+            "addressLine" : "Matterstrasse",
+            "streetNmbr" : 43
+          }, {
+            "stateProv" : "Wallis",
+            "cityName" : "Zermatt",
+            "postalCode" : "3920",
+            "countryName" : "Schweiz",
+            "addressLine" : "Matterstrasse",
+            "streetNmbr" : 43
+          } ],
+          "companyName" : "Test Hotel gmbH",
+          "phones" : [ {
+            "phoneTechType" : 1,
+            "phoneNumber" : "279556655",
+            "countryAccessCode" : "41"
+          }, {
+            "phoneTechType" : 1,
+            "phoneNumber" : "279556655",
+            "countryAccessCode" : "41"
+          } ]
+        }, {
+          "emails" : [ {
+            "email" : "first.last@example.com"
+          }, {
+            "email" : "first.last@example.com"
+          } ],
+          "addresses" : [ {
+            "stateProv" : "Wallis",
+            "cityName" : "Zermatt",
+            "postalCode" : "3920",
+            "countryName" : "Schweiz",
+            "addressLine" : "Matterstrasse",
+            "streetNmbr" : 43
+          }, {
+            "stateProv" : "Wallis",
+            "cityName" : "Zermatt",
+            "postalCode" : "3920",
+            "countryName" : "Schweiz",
+            "addressLine" : "Matterstrasse",
+            "streetNmbr" : 43
+          } ],
+          "companyName" : "Test Hotel gmbH",
+          "phones" : [ {
+            "phoneTechType" : 1,
+            "phoneNumber" : "279556655",
+            "countryAccessCode" : "41"
+          }, {
+            "phoneTechType" : 1,
+            "phoneNumber" : "279556655",
+            "countryAccessCode" : "41"
+          } ]
+        } ],
+        "policies" : {
+          "policyInfo" : {
+            "maxChildAge" : 12,
+            "minChildAge" : 2
+          }
+        },
+        "timeZone" : "Europe/Zurich",
+        "hotelId" : "00U5846e022f291e",
+        "areaUnitOfMeasureCode" : 14,
+        "hotelName" : "Test hotel",
+        "currencyCode" : "CHF",
+        "distanceUnitOfMeasureCode" : 2
+      }
+    },
+    "HotelInfo" : {
+      "type" : "object",
+      "properties" : {
+        "whenBuilt" : {
+          "type" : "string",
+          "format" : "date",
+          "example" : "1969",
+          "description" : "The date that the hotel facility was built, usually just the year."
+        },
+        "position" : {
+          "$ref" : "#/definitions/HotelInfo_position"
+        },
+        "descriptions" : {
+          "$ref" : "#/definitions/Descriptions"
+        },
+        "services" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Service"
+          }
+        }
+      },
+      "description" : "Contains descriptive information about a hotel.",
+      "example" : {
+        "whenBuilt" : "1969",
+        "position" : {
+          "altitude" : 150.0,
+          "latitude" : 47.444546,
+          "longitude" : 4.161718
+        },
+        "services" : [ "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]", "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]" ],
+        "descriptions" : {
+          "multimediadescriptions" : [ {
+            "images" : [ {
+              "imageWidth" : 350,
+              "imageId" : "00L55eee8ef46e5b",
+              "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+              "sort" : 1,
+              "dimensionCategory" : "Mobile",
+              "imageHeight" : 150
+            }, {
+              "imageWidth" : 350,
+              "imageId" : "00L55eee8ef46e5b",
+              "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+              "sort" : 1,
+              "dimensionCategory" : "Mobile",
+              "imageHeight" : 150
+            } ],
+            "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+          }, {
+            "images" : [ {
+              "imageWidth" : 350,
+              "imageId" : "00L55eee8ef46e5b",
+              "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+              "sort" : 1,
+              "dimensionCategory" : "Mobile",
+              "imageHeight" : 150
+            }, {
+              "imageWidth" : 350,
+              "imageId" : "00L55eee8ef46e5b",
+              "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+              "sort" : 1,
+              "dimensionCategory" : "Mobile",
+              "imageHeight" : 150
+            } ],
+            "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+          } ]
+        }
+      }
+    },
+    "Descriptions" : {
+      "type" : "object",
+      "properties" : {
+        "multimediadescriptions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MultimediaDescription"
+          }
+        }
+      },
+      "example" : {
+        "multimediadescriptions" : [ {
+          "images" : [ {
+            "imageWidth" : 350,
+            "imageId" : "00L55eee8ef46e5b",
+            "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+            "sort" : 1,
+            "dimensionCategory" : "Mobile",
+            "imageHeight" : 150
+          }, {
+            "imageWidth" : 350,
+            "imageId" : "00L55eee8ef46e5b",
+            "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+            "sort" : 1,
+            "dimensionCategory" : "Mobile",
+            "imageHeight" : 150
+          } ],
+          "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+        }, {
+          "images" : [ {
+            "imageWidth" : 350,
+            "imageId" : "00L55eee8ef46e5b",
+            "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+            "sort" : 1,
+            "dimensionCategory" : "Mobile",
+            "imageHeight" : 150
+          }, {
+            "imageWidth" : 350,
+            "imageId" : "00L55eee8ef46e5b",
+            "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+            "sort" : 1,
+            "dimensionCategory" : "Mobile",
+            "imageHeight" : 150
+          } ],
+          "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+        } ]
+      }
+    },
+    "MultimediaDescription" : {
+      "type" : "object",
+      "properties" : {
+        "images" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MultimediaDescription_images"
+          }
+        },
+        "texts" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MultimediaDescription_texts"
+          }
+        }
+      },
+      "example" : {
+        "images" : [ {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        }, {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        } ],
+        "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+      }
+    },
+    "Award" : {
+      "type" : "object",
+      "properties" : {
+        "provider" : {
+          "type" : "string"
+        },
+        "rating" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Service" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "The code for a service or amenity. Refer to OpenTravel Code List Hotel Amenity Code (HAC)."
+        },
+        "codeDetails" : {
+          "type" : "string",
+          "description" : "May be used to give further detail on the code. (Information about which list the code refers to)"
+        }
+      },
+      "example" : "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]"
+    },
+    "GuestRoom" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "roomTypeName" : {
+          "type" : "string"
+        },
+        "minOccupancy" : {
+          "type" : "integer"
+        },
+        "maxOccupancy" : {
+          "type" : "integer"
+        },
+        "maxChildOccupancy" : {
+          "type" : "integer"
+        },
+        "maxAdultOccupancy" : {
+          "type" : "integer"
+        },
+        "typeRoom" : {
+          "$ref" : "#/definitions/TypeRoom"
+        },
+        "amenities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RoomAmenity"
+          }
+        },
+        "multimediaDescriptions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MultimediaDescription"
+          }
+        }
+      }
+    },
+    "TypeRoom" : {
+      "type" : "object",
+      "properties" : {
+        "standardOccupancy" : {
+          "type" : "integer",
+          "description" : "Indicates the usual number of guests that occupy this room."
+        },
+        "standardNumBeds" : {
+          "type" : "integer"
+        },
+        "maxCribs" : {
+          "type" : "integer"
+        },
+        "maxRollaways" : {
+          "type" : "integer"
+        },
+        "composite" : {
+          "type" : "boolean",
+          "description" : "Indicates that the room (suite) is a composite of smaller units."
+        },
+        "quantity" : {
+          "type" : "integer",
+          "description" : "Defines the number of the item in question. Used for Numeric values, from 1 to 9999 inclusive."
+        }
+      }
+    },
+    "RoomAmenity" : {
+      "type" : "object",
+      "properties" : {
+        "roomAmenityCode" : {
+          "type" : "integer",
+          "description" : "Refer to OpenTravel Code List Room Amenity Type (RMA)."
+        },
+        "codeDetail" : {
+          "type" : "string",
+          "description" : "May be used to give further detail on the code."
+        }
+      },
+      "description" : "Tangible room item(s) (e.g., newspaper) available to the guest."
+    },
+    "ContactInfo" : {
+      "type" : "object",
+      "properties" : {
+        "companyName" : {
+          "type" : "string",
+          "example" : "Test Hotel gmbH"
+        },
+        "addresses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Address"
+          }
+        },
+        "phones" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Phone"
+          }
+        },
+        "emails" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Email"
+          }
+        }
+      },
+      "example" : {
+        "emails" : [ {
+          "email" : "first.last@example.com"
+        }, {
+          "email" : "first.last@example.com"
+        } ],
+        "addresses" : [ {
+          "stateProv" : "Wallis",
+          "cityName" : "Zermatt",
+          "postalCode" : "3920",
+          "countryName" : "Schweiz",
+          "addressLine" : "Matterstrasse",
+          "streetNmbr" : 43
+        }, {
+          "stateProv" : "Wallis",
+          "cityName" : "Zermatt",
+          "postalCode" : "3920",
+          "countryName" : "Schweiz",
+          "addressLine" : "Matterstrasse",
+          "streetNmbr" : 43
+        } ],
+        "companyName" : "Test Hotel gmbH",
+        "phones" : [ {
+          "phoneTechType" : 1,
+          "phoneNumber" : "279556655",
+          "countryAccessCode" : "41"
+        }, {
+          "phoneTechType" : 1,
+          "phoneNumber" : "279556655",
+          "countryAccessCode" : "41"
+        } ]
+      }
+    },
+    "Address" : {
+      "type" : "object",
+      "properties" : {
+        "streetNmbr" : {
+          "type" : "integer",
+          "example" : 43
+        },
+        "addressLine" : {
+          "type" : "string",
+          "example" : "Matterstrasse"
+        },
+        "cityName" : {
+          "type" : "string",
+          "example" : "Zermatt"
+        },
+        "postalCode" : {
+          "type" : "string",
+          "example" : "3920"
+        },
+        "stateProv" : {
+          "type" : "string",
+          "example" : "Wallis"
+        },
+        "countryName" : {
+          "type" : "string",
+          "example" : "Schweiz"
+        }
+      },
+      "example" : {
+        "stateProv" : "Wallis",
+        "cityName" : "Zermatt",
+        "postalCode" : "3920",
+        "countryName" : "Schweiz",
+        "addressLine" : "Matterstrasse",
+        "streetNmbr" : 43
+      }
+    },
+    "Phone" : {
+      "type" : "object",
+      "properties" : {
+        "phoneTechType" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "countryAccessCode" : {
+          "type" : "string",
+          "example" : "41"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "279556655"
+        }
+      },
+      "example" : {
+        "phoneTechType" : 1,
+        "phoneNumber" : "279556655",
+        "countryAccessCode" : "41"
+      }
+    },
+    "Email" : {
+      "type" : "object",
+      "properties" : {
+        "email" : {
+          "type" : "string",
+          "example" : "first.last@example.com"
+        }
+      },
+      "example" : {
+        "email" : "first.last@example.com"
+      }
+    },
+    "MultiDescription" : {
+      "type" : "object",
+      "properties" : {
+        "texts" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor elit ut venenatis porttitor. Nullam ac massa interdum, porttitor ante non, tristique lorem. Sed hendrerit imperdiet diam at suscipit."
+          }
+        },
+        "images" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "http://images.example.com/00L55eee8ef46e5b.jpg"
+          }
+        },
+        "urls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "http://www.example.com"
+          }
+        }
+      }
+    },
+    "HotelProducts" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/HotelProduct"
+      }
+    },
+    "HotelProduct" : {
+      "type" : "object",
+      "properties" : {
+        "roomTypes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/HotelProduct_roomTypes"
+          }
+        },
+        "ratePlans" : {
+          "type" : "array",
+          "example" : [ {
+            "ratePlanCode" : "01q578c6dd5e1d4c",
+            "ratePlanName" : "Standard",
+            "currencyCode" : "CHF",
+            "descriptions" : {
+              "texts" : [ "Rate plan description" ],
+              "images" : [ "http://images.example.com/00L55eee8ef46e5b.jpg", "http://images.example.com/00L55eee8ef46b7a.jpg" ]
+            }
+          }, {
+            "ratePlanCode" : "01q578c6dd5e1d5d",
+            "ratePlanName" : "Non-Refundable",
+            "currencyCode" : "CHF",
+            "descriptions" : { }
+          } ],
+          "items" : {
+            "$ref" : "#/definitions/HotelProduct_ratePlans"
+          }
+        }
+      }
+    },
+    "BestAvailabilityResults" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/BestAvailabilityResult"
+      }
+    },
+    "BestAvailabilityResult" : {
+      "type" : "object",
+      "properties" : {
+        "arrivalDate" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "The following results are given for an arrival on this date"
+        },
+        "minLOS" : {
+          "type" : "integer",
+          "description" : "Minimum possible length of stay"
+        },
+        "maxLOS" : {
+          "type" : "integer",
+          "description" : "Maximum possible length of stay"
+        },
+        "stayLengths" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BestAvailabilitySingleResult"
+          }
+        }
+      }
+    },
+    "BestAvailabilitySingleResult" : {
+      "type" : "object",
+      "properties" : {
+        "nbAdults" : {
+          "type" : "integer"
+        },
+        "nbChildren" : {
+          "type" : "integer"
+        },
+        "nbInfants" : {
+          "type" : "integer"
+        },
+        "roomId" : {
+          "type" : "string"
+        },
+        "rateCode" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Total price for the stay"
+        },
+        "currency" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "description" : "The number of available rooms with this conditions"
+        }
+      }
+    },
+    "AvailabilityResults" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/RoomAvailabilityResult"
+      }
+    },
+    "RoomAvailabilityResult" : {
+      "type" : "object",
+      "properties" : {
+        "guestroomId" : {
+          "type" : "string",
+          "description" : "ID of the room type"
+        },
+        "products" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AvailabilityResult"
+          }
+        }
+      }
+    },
+    "AvailabilityResult" : {
+      "type" : "object",
+      "properties" : {
+        "rateplanId" : {
+          "type" : "string",
+          "description" : "ID of the rate plan"
+        },
+        "totalPrice" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Total price for the stay"
+        },
+        "discount" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Discount amount offered on this product"
+        },
+        "currency" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        },
+        "isBar" : {
+          "type" : "boolean",
+          "description" : "Whether this product is the Best Available Rate or not"
+        },
+        "availability" : {
+          "type" : "integer",
+          "description" : "Number of rooms that are available through this rate"
+        },
+        "limitedOffer" : {
+          "type" : "boolean",
+          "description" : "Whether this product is a limited offer or not"
+        }
+      }
+    },
+    "RoomStay" : {
+      "type" : "object",
+      "properties" : {
+        "guestRoomId" : {
+          "type" : "string",
+          "description" : "ID of the selected room type"
+        },
+        "rateplanId" : {
+          "type" : "string",
+          "description" : "ID of the selected rate plan"
+        },
+        "startDate" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "Start date of the stay (date of arrival)"
+        },
+        "endDate" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "End date of the stay (date of departure)"
+        },
+        "nbAdults" : {
+          "type" : "integer",
+          "description" : "Number of adults for the stay"
+        },
+        "nbChildren" : {
+          "type" : "integer",
+          "description" : "Number of children for the stay"
+        },
+        "nbInfants" : {
+          "type" : "integer",
+          "description" : "Number of infants for the stay"
+        },
+        "totalPrice" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Total price for the stay"
+        },
+        "totalDiscount" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Total of the discounts on the stay"
+        },
+        "services" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BasicService"
+          }
+        }
+      },
+      "example" : {
+        "guestRoomId" : "guestRoomId",
+        "endDate" : "2000-01-23",
+        "totalPrice" : 5.962134,
+        "nbChildren" : 6,
+        "nbInfants" : 1,
+        "totalDiscount" : 5.637377,
+        "rateplanId" : "rateplanId",
+        "nbAdults" : 0,
+        "services" : [ {
+          "price" : 2.302136,
+          "discount" : 7.0614014,
+          "currency" : "CHF",
+          "serviceId" : "serviceId",
+          "included" : true
+        }, {
+          "price" : 2.302136,
+          "discount" : 7.0614014,
+          "currency" : "CHF",
+          "serviceId" : "serviceId",
+          "included" : true
+        } ],
+        "startDate" : "2000-01-23"
+      }
+    },
+    "AvailabilityCheckResult" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "enum" : [ "OK", "KO" ]
+        },
+        "correlationId" : {
+          "type" : "string",
+          "example" : "02b5a5f00415ca61",
+          "description" : "The correlation ID has to be submitted together with the reservation when done"
+        }
+      },
+      "example" : {
+        "correlationId" : "02b5a5f00415ca61",
+        "status" : "OK"
+      }
+    },
+    "BasicService" : {
+      "type" : "object",
+      "properties" : {
+        "serviceId" : {
+          "type" : "string",
+          "description" : "ID of the service"
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Price of the service"
+        },
+        "discount" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Discount amount offered on this service"
+        },
+        "currency" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        },
+        "included" : {
+          "type" : "boolean",
+          "description" : "Whether the service price is included in the roomstay price or not"
+        }
+      },
+      "example" : {
+        "price" : 2.302136,
+        "discount" : 7.0614014,
+        "currency" : "CHF",
+        "serviceId" : "serviceId",
+        "included" : true
+      }
+    },
+    "ServiceResults" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/ServiceResult"
+      }
+    },
+    "ServiceResult" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BasicService"
+      }, {
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of the service"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the service"
+          },
+          "pictures" : {
+            "type" : "array",
+            "description" : "Pictures of the service (array of URLs)",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      } ]
+    },
+    "CurrencyCode" : {
+      "type" : "string",
+      "description" : "An ISO 4217 (3) alpha character code that specifies a monetary unit.",
+      "example" : "CHF"
+    },
+    "CancelPenalties" : {
+      "type" : "string",
+      "example" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking."
+    },
+    "Reservation" : {
+      "type" : "object",
+      "properties" : {
+        "hotelReservationId" : {
+          "type" : "string",
+          "example" : "01n576bcf7dadccb"
+        },
+        "status" : {
+          "$ref" : "#/definitions/ReservationStatus"
+        },
+        "createDateTime" : {
+          "type" : "string",
+          "format" : "datetime",
+          "example" : "2015-09-08T13:11:31.2567097+00:00"
+        },
+        "lastModifyDateTime" : {
+          "type" : "string",
+          "format" : "datetime",
+          "example" : "2015-09-08T13:11:31.2567097+00:00"
+        },
+        "roomStays" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ReservationRoomStay"
+          }
+        },
+        "resGuests" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ReservationResGuest"
+          }
+        },
+        "resGlobalInfo" : {
+          "$ref" : "#/definitions/Reservation_resGlobalInfo"
+        }
+      },
+      "example" : {
+        "lastModifyDateTime" : "2015-09-08T13:11:31.2567097+00:00",
+        "roomStays" : [ {
+          "total" : {
+            "amountAfterTax" : 340.6,
+            "currencyCode" : "CHF"
+          },
+          "cancelPenalties" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking.",
+          "resGuestRphs" : [ 1 ],
+          "ratePlanId" : "01n576bcf7dadcba",
+          "rates" : [ {
+            "date" : "2015-12-02",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          }, {
+            "date" : "2015-12-03",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          } ],
+          "guestCounts" : [ {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          }, {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          } ],
+          "timeSpan" : {
+            "start" : "2015-12-02",
+            "end" : "2015-12-04"
+          },
+          "roomId" : "01n576bcf7daabcd",
+          "status" : "Book"
+        }, {
+          "total" : {
+            "amountAfterTax" : 340.6,
+            "currencyCode" : "CHF"
+          },
+          "cancelPenalties" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking.",
+          "resGuestRphs" : [ 1 ],
+          "ratePlanId" : "01n576bcf7dadcba",
+          "rates" : [ {
+            "date" : "2015-12-02",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          }, {
+            "date" : "2015-12-03",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          } ],
+          "guestCounts" : [ {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          }, {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          } ],
+          "timeSpan" : {
+            "start" : "2015-12-02",
+            "end" : "2015-12-04"
+          },
+          "roomId" : "01n576bcf7daabcd",
+          "status" : "Book"
+        } ],
+        "resGlobalInfo" : {
+          "total" : {
+            "amountAfterTax" : 340.6,
+            "currencyCode" : "CHF"
+          },
+          "comments" : [ "We will arrive after 20h. If possible we would prefer a room in the upper floors.", "We will arrive after 20h. If possible we would prefer a room in the upper floors." ],
+          "profiles" : [ "", "" ],
+          "guarantee" : {
+            "paymentCard" : {
+              "cardHolderName" : "Mr. John Doe",
+              "cardCode" : "AX",
+              "expireDate" : "01/18",
+              "cardNumber" : "xxxx xxxx xxxx 1110"
+            }
+          },
+          "timeSpan" : {
+            "start" : "2015-12-02",
+            "end" : "2015-12-04"
+          },
+          "guestCounts" : [ {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          }, {
+            "count" : 2,
+            "ageQualifyingCode" : 10
+          } ]
+        },
+        "hotelReservationId" : "01n576bcf7dadccb",
+        "resGuests" : [ "", "" ],
+        "status" : "Book",
+        "createDateTime" : "2015-09-08T13:11:31.2567097+00:00"
+      }
+    },
+    "PaymentCard" : {
+      "type" : "object",
+      "properties" : {
+        "cardCode" : {
+          "type" : "string",
+          "example" : "AX",
+          "enum" : [ "AX", "VI", "MC", "EC", "DN", "JC", "DS", "MA", "BL", "CB", "BC", "CU", "TP" ]
+        },
+        "cardNumber" : {
+          "type" : "string",
+          "example" : "xxxx xxxx xxxx 1110"
+        },
+        "expireDate" : {
+          "type" : "string",
+          "example" : "01/18"
+        },
+        "cardHolderName" : {
+          "type" : "string",
+          "example" : "Mr. John Doe"
+        }
+      },
+      "example" : {
+        "cardHolderName" : "Mr. John Doe",
+        "cardCode" : "AX",
+        "expireDate" : "01/18",
+        "cardNumber" : "xxxx xxxx xxxx 1110"
+      }
+    },
+    "ReservationStatus" : {
+      "type" : "string",
+      "example" : "Book",
+      "enum" : [ "Book", "Modify", "Cancel" ]
+    },
+    "ReservationRoomStay" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "$ref" : "#/definitions/ReservationStatus"
+        },
+        "roomId" : {
+          "type" : "string",
+          "example" : "01n576bcf7daabcd"
+        },
+        "ratePlanId" : {
+          "type" : "string",
+          "example" : "01n576bcf7dadcba"
+        },
+        "rates" : {
+          "type" : "array",
+          "example" : [ {
+            "date" : "2015-12-02",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          }, {
+            "date" : "2015-12-03",
+            "amountAfterTax" : 170.3,
+            "currencyCode" : "CHF"
+          } ],
+          "items" : {
+            "$ref" : "#/definitions/RoomRate"
+          }
+        },
+        "guestCounts" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GuestCount"
+          }
+        },
+        "timeSpan" : {
+          "$ref" : "#/definitions/TimeSpan"
+        },
+        "total" : {
+          "$ref" : "#/definitions/Total"
+        },
+        "cancelPenalties" : {
+          "$ref" : "#/definitions/CancelPenalties"
+        },
+        "resGuestRphs" : {
+          "type" : "array",
+          "example" : [ 1 ],
+          "items" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "example" : {
+        "total" : {
+          "amountAfterTax" : 340.6,
+          "currencyCode" : "CHF"
+        },
+        "cancelPenalties" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking.",
+        "resGuestRphs" : [ 1 ],
+        "ratePlanId" : "01n576bcf7dadcba",
+        "rates" : [ {
+          "date" : "2015-12-02",
+          "amountAfterTax" : 170.3,
+          "currencyCode" : "CHF"
+        }, {
+          "date" : "2015-12-03",
+          "amountAfterTax" : 170.3,
+          "currencyCode" : "CHF"
+        } ],
+        "guestCounts" : [ {
+          "count" : 2,
+          "ageQualifyingCode" : 10
+        }, {
+          "count" : 2,
+          "ageQualifyingCode" : 10
+        } ],
+        "timeSpan" : {
+          "start" : "2015-12-02",
+          "end" : "2015-12-04"
+        },
+        "roomId" : "01n576bcf7daabcd",
+        "status" : "Book"
+      }
+    },
+    "RoomRate" : {
+      "type" : "object",
+      "properties" : {
+        "date" : {
+          "type" : "string",
+          "format" : "date",
+          "example" : "2015-12-02"
+        },
+        "amountAfterTax" : {
+          "type" : "number",
+          "format" : "float",
+          "example" : 170.3
+        },
+        "currencyCode" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        }
+      }
+    },
+    "ReservationResGuest" : {
+      "allOf" : [ {
+        "type" : "object",
+        "properties" : {
+          "resGuestRph" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      }, {
+        "$ref" : "#/definitions/Profile"
+      } ]
+    },
+    "Total" : {
+      "type" : "object",
+      "properties" : {
+        "amountAfterTax" : {
+          "type" : "number",
+          "format" : "float",
+          "example" : 340.6
+        },
+        "currencyCode" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        }
+      },
+      "example" : {
+        "amountAfterTax" : 340.6,
+        "currencyCode" : "CHF"
+      }
+    },
+    "TimeSpan" : {
+      "type" : "object",
+      "properties" : {
+        "start" : {
+          "type" : "string",
+          "format" : "date",
+          "example" : "2015-12-02"
+        },
+        "end" : {
+          "type" : "string",
+          "format" : "date",
+          "example" : "2015-12-04"
+        }
+      },
+      "example" : {
+        "start" : "2015-12-02",
+        "end" : "2015-12-04"
+      }
+    },
+    "GuestCount" : {
+      "type" : "object",
+      "properties" : {
+        "ageQualifyingCode" : {
+          "type" : "integer",
+          "example" : 10,
+          "description" : "A code representing the age category: 10 (Adults), 8 (Children), 7 (Infants)"
+        },
+        "count" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "example" : {
+        "count" : 2,
+        "ageQualifyingCode" : 10
+      }
+    },
+    "Profile" : {
+      "allOf" : [ {
+        "type" : "object",
+        "properties" : {
+          "gender" : {
+            "type" : "string",
+            "enum" : [ "Male", "Female", "Unknown" ]
+          },
+          "givenName" : {
+            "type" : "string",
+            "example" : "John"
+          },
+          "surname" : {
+            "type" : "string",
+            "example" : "Doe"
+          },
+          "phone" : {
+            "$ref" : "#/definitions/Phone"
+          },
+          "address" : {
+            "$ref" : "#/definitions/Address"
+          }
+        }
+      }, {
+        "$ref" : "#/definitions/Email"
+      } ]
+    },
+    "ReservationRequest" : {
+      "type" : "object",
+      "properties" : {
+        "correlationId" : {
+          "type" : "string",
+          "example" : "02b5a5f00415ca61"
+        },
+        "roomStays" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RoomStay"
+          }
+        },
+        "guestInfo" : {
+          "$ref" : "#/definitions/Profile"
+        }
+      },
+      "example" : {
+        "roomStays" : [ {
+          "guestRoomId" : "guestRoomId",
+          "endDate" : "2000-01-23",
+          "totalPrice" : 5.962134,
+          "nbChildren" : 6,
+          "nbInfants" : 1,
+          "totalDiscount" : 5.637377,
+          "rateplanId" : "rateplanId",
+          "nbAdults" : 0,
+          "services" : [ {
+            "price" : 2.302136,
+            "discount" : 7.0614014,
+            "currency" : "CHF",
+            "serviceId" : "serviceId",
+            "included" : true
+          }, {
+            "price" : 2.302136,
+            "discount" : 7.0614014,
+            "currency" : "CHF",
+            "serviceId" : "serviceId",
+            "included" : true
+          } ],
+          "startDate" : "2000-01-23"
+        }, {
+          "guestRoomId" : "guestRoomId",
+          "endDate" : "2000-01-23",
+          "totalPrice" : 5.962134,
+          "nbChildren" : 6,
+          "nbInfants" : 1,
+          "totalDiscount" : 5.637377,
+          "rateplanId" : "rateplanId",
+          "nbAdults" : 0,
+          "services" : [ {
+            "price" : 2.302136,
+            "discount" : 7.0614014,
+            "currency" : "CHF",
+            "serviceId" : "serviceId",
+            "included" : true
+          }, {
+            "price" : 2.302136,
+            "discount" : 7.0614014,
+            "currency" : "CHF",
+            "serviceId" : "serviceId",
+            "included" : true
+          } ],
+          "startDate" : "2000-01-23"
+        } ],
+        "correlationId" : "02b5a5f00415ca61",
+        "guestInfo" : ""
+      }
+    },
+    "HotelDescriptiveInfo_affiliationInfo" : {
+      "properties" : {
+        "awards" : {
+          "type" : "array",
+          "example" : [ {
+            "provider" : "HotelAssociation",
+            "rating" : 3
+          }, {
+            "provider" : "TripAdvisor",
+            "rating" : 3.5
+          } ],
+          "items" : {
+            "$ref" : "#/definitions/Award"
+          }
+        }
+      },
+      "description" : "Provides information regarding affiliations, loyalty programs and award ratings.The AffiliationInfo object is used to identify the brand or franchise affiliations of the hotel.",
+      "example" : {
+        "awards" : [ {
+          "provider" : "HotelAssociation",
+          "rating" : 3
+        }, {
+          "provider" : "TripAdvisor",
+          "rating" : 3.5
+        } ]
+      }
+    },
+    "HotelDescriptiveInfo_facilityInfo" : {
+      "properties" : {
+        "guestRooms" : {
+          "type" : "array",
+          "example" : [ {
+            "id" : "00U5846e022f2911",
+            "roomTypeName" : "Junior Suite",
+            "minOccupancy" : 1,
+            "maxOccupancy" : 2,
+            "maxChildOccupancy" : 1,
+            "maxAdultOccupancy" : 2,
+            "typeRoom" : {
+              "standardOccupancy" : 1,
+              "standardNumBeds" : 1,
+              "maxCribs" : 1,
+              "maxRollaways" : 0,
+              "composite" : false,
+              "quantity" : 26
+            },
+            "amenities" : [ {
+              "roomAmenityCode" : 2,
+              "codeDetails" : "Air conditioning"
+            }, {
+              "roomAmenityCode" : 55,
+              "codeDetails" : "Iron"
+            } ],
+            "multimediaDescriptions" : {
+              "images" : [ {
+                "imageId" : "00U5846e022f2915",
+                "imageUrl" : "http://images.example.com/00U5846e022f2915.jpg",
+                "imageWidth" : 1920,
+                "imageHeight" : 1080,
+                "dimensionCategory" : "Desktop"
+              }, {
+                "imageId" : "00U5846e022e4567",
+                "imageUrl" : "http://images.example.com/00U5846e022e4567.jpg",
+                "imageWidth" : 720,
+                "imageHeight" : 480,
+                "dimensionCategory" : "Mobile"
+              }, {
+                "imageId" : "00U5846e022f2916",
+                "imageUrl" : "http://images.example.com/00U5846e022f2916.jpg",
+                "imageWidth" : 1920,
+                "imageHeight" : 1080,
+                "dimensionCategory" : "Desktop"
+              } ]
+            }
+          }, {
+            "id" : "00U5846e022f2912",
+            "roomTypeName" : "Double deluxe",
+            "minOccupancy" : 1,
+            "maxOccupancy" : 3,
+            "maxChildOccupancy" : 2,
+            "maxAdultOccupancy" : 3,
+            "typeRoom" : {
+              "standardOccupancy" : 2,
+              "standardNumBeds" : 1,
+              "maxCribs" : 1,
+              "maxRollaways" : 0,
+              "composite" : false,
+              "quantity" : 14
+            }
+          } ],
+          "items" : {
+            "$ref" : "#/definitions/GuestRoom"
+          }
+        }
+      },
+      "description" : "Provides information pertaining to the hotel facility itself. Describes the facilities provided at the hotel, including meeting rooms and restaurants.",
+      "example" : {
+        "guestRooms" : [ {
+          "id" : "00U5846e022f2911",
+          "roomTypeName" : "Junior Suite",
+          "minOccupancy" : 1,
+          "maxOccupancy" : 2,
+          "maxChildOccupancy" : 1,
+          "maxAdultOccupancy" : 2,
+          "typeRoom" : {
+            "standardOccupancy" : 1,
+            "standardNumBeds" : 1,
+            "maxCribs" : 1,
+            "maxRollaways" : 0,
+            "composite" : false,
+            "quantity" : 26
+          },
+          "amenities" : [ {
+            "roomAmenityCode" : 2,
+            "codeDetails" : "Air conditioning"
+          }, {
+            "roomAmenityCode" : 55,
+            "codeDetails" : "Iron"
+          } ],
+          "multimediaDescriptions" : {
+            "images" : [ {
+              "imageId" : "00U5846e022f2915",
+              "imageUrl" : "http://images.example.com/00U5846e022f2915.jpg",
+              "imageWidth" : 1920,
+              "imageHeight" : 1080,
+              "dimensionCategory" : "Desktop"
+            }, {
+              "imageId" : "00U5846e022e4567",
+              "imageUrl" : "http://images.example.com/00U5846e022e4567.jpg",
+              "imageWidth" : 720,
+              "imageHeight" : 480,
+              "dimensionCategory" : "Mobile"
+            }, {
+              "imageId" : "00U5846e022f2916",
+              "imageUrl" : "http://images.example.com/00U5846e022f2916.jpg",
+              "imageWidth" : 1920,
+              "imageHeight" : 1080,
+              "dimensionCategory" : "Desktop"
+            } ]
+          }
+        }, {
+          "id" : "00U5846e022f2912",
+          "roomTypeName" : "Double deluxe",
+          "minOccupancy" : 1,
+          "maxOccupancy" : 3,
+          "maxChildOccupancy" : 2,
+          "maxAdultOccupancy" : 3,
+          "typeRoom" : {
+            "standardOccupancy" : 2,
+            "standardNumBeds" : 1,
+            "maxCribs" : 1,
+            "maxRollaways" : 0,
+            "composite" : false,
+            "quantity" : 14
+          }
+        } ]
+      }
+    },
+    "HotelDescriptiveInfo_policies_policyInfo" : {
+      "properties" : {
+        "minChildAge" : {
+          "type" : "integer",
+          "example" : 2
+        },
+        "maxChildAge" : {
+          "type" : "integer",
+          "example" : 12
+        }
+      },
+      "description" : "General policy information",
+      "example" : {
+        "maxChildAge" : 12,
+        "minChildAge" : 2
+      }
+    },
+    "HotelDescriptiveInfo_policies" : {
+      "properties" : {
+        "policyInfo" : {
+          "$ref" : "#/definitions/HotelDescriptiveInfo_policies_policyInfo"
+        }
+      },
+      "description" : "Provides information about the hotel policies (payment, guarantees, etc.)",
+      "example" : {
+        "policyInfo" : {
+          "maxChildAge" : 12,
+          "minChildAge" : 2
+        }
+      }
+    },
+    "HotelInfo_position" : {
+      "properties" : {
+        "altitude" : {
+          "type" : "number",
+          "example" : 150.0
+        },
+        "latitude" : {
+          "type" : "number",
+          "example" : 47.444546
+        },
+        "longitude" : {
+          "type" : "number",
+          "example" : 4.161718
+        }
+      },
+      "example" : {
+        "altitude" : 150.0,
+        "latitude" : 47.444546,
+        "longitude" : 4.161718
+      }
+    },
+    "MultimediaDescription_images" : {
+      "properties" : {
+        "sort" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "imageId" : {
+          "type" : "string",
+          "example" : "00L55eee8ef46e5b"
+        },
+        "imageUrl" : {
+          "type" : "string",
+          "example" : "http://images.example.com/00L55eee8ef46e5b.jpg"
+        },
+        "imageWidth" : {
+          "type" : "integer",
+          "example" : 350
+        },
+        "imageHeight" : {
+          "type" : "integer",
+          "example" : 150
+        },
+        "dimensionCategory" : {
+          "type" : "string",
+          "example" : "Mobile",
+          "description" : "Used to define the category of the image",
+          "enum" : [ "Original", "Thumbnail", "Mobile", "Desktop", "Wide" ]
+        }
+      },
+      "example" : {
+        "imageWidth" : 350,
+        "imageId" : "00L55eee8ef46e5b",
+        "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+        "sort" : 1,
+        "dimensionCategory" : "Mobile",
+        "imageHeight" : 150
+      }
+    },
+    "MultimediaDescription_texts" : {
+      "properties" : {
+        "detailsCode" : {
+          "type" : "integer",
+          "description" : "Used to designate a particular type of additional information. [Here is the list of the possible Additional Detail Type (ADT) values](https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325600/Additional+Detail+Type+ADT)"
+        },
+        "text" : {
+          "type" : "string"
+        }
+      },
+      "example" : "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]"
+    },
+    "HotelProduct_roomTypes" : {
+      "properties" : {
+        "roomTypeCode" : {
+          "type" : "string",
+          "example" : "01q578c6e6bdf51d"
+        }
+      }
+    },
+    "HotelProduct_ratePlans" : {
+      "properties" : {
+        "ratePlanCode" : {
+          "type" : "string"
+        },
+        "ratePlanName" : {
+          "type" : "string"
+        },
+        "currencyCode" : {
+          "$ref" : "#/definitions/CurrencyCode"
+        },
+        "descriptions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MultiDescription"
+          }
+        }
+      }
+    },
+    "Reservation_resGlobalInfo_guarantee" : {
+      "properties" : {
+        "paymentCard" : {
+          "$ref" : "#/definitions/PaymentCard"
+        }
+      },
+      "example" : {
+        "paymentCard" : {
+          "cardHolderName" : "Mr. John Doe",
+          "cardCode" : "AX",
+          "expireDate" : "01/18",
+          "cardNumber" : "xxxx xxxx xxxx 1110"
+        }
+      }
+    },
+    "Reservation_resGlobalInfo" : {
+      "properties" : {
+        "timeSpan" : {
+          "$ref" : "#/definitions/TimeSpan"
+        },
+        "comments" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "We will arrive after 20h. If possible we would prefer a room in the upper floors."
+          }
+        },
+        "guarantee" : {
+          "$ref" : "#/definitions/Reservation_resGlobalInfo_guarantee"
+        },
+        "total" : {
+          "$ref" : "#/definitions/Total"
+        },
+        "guestCounts" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GuestCount"
+          }
+        },
+        "profiles" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Profile"
+          }
+        }
+      },
+      "example" : {
+        "total" : {
+          "amountAfterTax" : 340.6,
+          "currencyCode" : "CHF"
+        },
+        "comments" : [ "We will arrive after 20h. If possible we would prefer a room in the upper floors.", "We will arrive after 20h. If possible we would prefer a room in the upper floors." ],
+        "profiles" : [ "", "" ],
+        "guarantee" : {
+          "paymentCard" : {
+            "cardHolderName" : "Mr. John Doe",
+            "cardCode" : "AX",
+            "expireDate" : "01/18",
+            "cardNumber" : "xxxx xxxx xxxx 1110"
+          }
+        },
+        "timeSpan" : {
+          "start" : "2015-12-02",
+          "end" : "2015-12-04"
+        },
+        "guestCounts" : [ {
+          "count" : 2,
+          "ageQualifyingCode" : 10
+        }, {
+          "count" : 2,
+          "ageQualifyingCode" : 10
+        } ]
+      }
+    }
+  },
+  "parameters" : {
+    "hotelId" : {
+      "name" : "hotelId",
+      "in" : "path",
+      "description" : "ID of the hotel",
+      "required" : true,
+      "type" : "string"
+    },
+    "language" : {
+      "name" : "lang",
+      "in" : "path",
+      "description" : "Language",
+      "required" : true,
+      "type" : "string",
+      "enum" : [ "en", "fr", "de", "nl", "es", "it" ]
+    },
+    "roomId" : {
+      "name" : "roomId",
+      "in" : "query",
+      "description" : "ID of the room type",
+      "required" : true,
+      "type" : "string"
+    },
+    "ratePlanId" : {
+      "name" : "rateplanId",
+      "in" : "query",
+      "description" : "ID of the rate plan",
+      "required" : true,
+      "type" : "string"
+    },
+    "startDate" : {
+      "name" : "start",
+      "in" : "query",
+      "description" : "Start date of the stay (date of arrival)",
+      "required" : true,
+      "type" : "string",
+      "format" : "date"
+    },
+    "endDate" : {
+      "name" : "end",
+      "in" : "query",
+      "description" : "End date of the stay (date of departure)",
+      "required" : true,
+      "type" : "string",
+      "format" : "date"
+    },
+    "nbAdults" : {
+      "name" : "nbAdults",
+      "in" : "query",
+      "description" : "Number of adults for the stay",
+      "required" : true,
+      "type" : "integer"
+    },
+    "nbChildren" : {
+      "name" : "nbChildren",
+      "in" : "query",
+      "description" : "Number of children for the stay",
+      "required" : true,
+      "type" : "integer"
+    },
+    "nbInfants" : {
+      "name" : "nbInfants",
+      "in" : "query",
+      "description" : "Number of infants for the stay",
+      "required" : true,
+      "type" : "integer"
+    },
+    "calStartDate" : {
+      "name" : "start",
+      "in" : "query",
+      "description" : "Start date of the requested timespan",
+      "required" : true,
+      "type" : "string",
+      "format" : "date"
+    },
+    "calEndDate" : {
+      "name" : "end",
+      "in" : "query",
+      "description" : "End date of the requested timespan",
+      "required" : true,
+      "type" : "string",
+      "format" : "date"
+    }
+  },
+  "responses" : {
+    "NotFound" : {
+      "description" : "Resource not found"
+    },
+    "Unauthorized" : {
+      "description" : "Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)"
+    }
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Hotel-Spider APIs",
+    "url" : "https://tourisoft.atlassian.net/wiki"
+  }
+}
