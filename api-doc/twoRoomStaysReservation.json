@@ -1,0 +1,69 @@
+{
+  "correlationId": "02b5a5f00415ca61",
+  "roomStays": [
+    {
+      "guestRoomId": "01W5833ffc2d3d32",
+      "rateplanId": "01W5834016075d33",
+      "startDate": "2018-06-16",
+      "endDate": "2018-06-18",
+      "nbAdults": 2,
+      "nbChildren": 1,
+      "nbInfants": 0,
+      "totalPrice": 330.00,
+      "totalDiscount": 22.20,
+      "services": [
+        {
+          "serviceId": "01W5834018479b73",
+          "price": 25.00,
+          "discount": 0,
+          "currency": "CHF",
+          "included": true
+        }
+      ]
+    },
+    {
+      "guestRoomId": "01W5833ffc2d3d32",
+      "rateplanId": "01W5834016075f56",
+      "startDate": "2018-06-16",
+      "endDate": "2018-06-18",
+      "nbAdults": 1,
+      "nbChildren": 0,
+      "nbInfants": 0,
+      "totalPrice": 220.00,
+      "totalDiscount": 10.50,
+      "services": [
+        {
+          "serviceId": "01W5834018479b73",
+          "price": 14.00,
+          "discount": 0,
+          "currency": "CHF",
+          "included": true
+        }
+      ]
+    }
+  ],
+  "guestInfo": {
+    "gender": "Male",
+    "givenName": "John",
+    "surname": "Doe",
+    "phone": {
+      "phoneNumber": 279556655
+    },
+    "address": {
+      "streetNmbr": 43,
+      "addressLine": "Matterstrasse",
+      "cityName": "Zermatt",
+      "postalCode": 3920,
+      "stateProv": "Wallis",
+      "countryName": "Schweiz"
+    },
+    "email": "first.last@example.com"
+  },
+  "paymentCard": {
+    "cardCode": "MC",
+    "cardNumber": "4242 4242 4242 4242",
+    "expireDate": "01/19",
+    "cardHolderName": "Mr. John Doe",
+    "seriesCode": "111"
+  }
+}
