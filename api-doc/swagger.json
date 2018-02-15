@@ -462,7 +462,7 @@
           "description" : "Information about the reservation to be booked",
           "required" : true,
           "schema" : {
-            "$ref" : "#/Definitions/ReservationRequest"
+            "$ref" : "#/definitions/ReservationRequest"
           }
         } ],
         "responses" : {
