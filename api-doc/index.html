@@ -1,0 +1,1616 @@
+<!doctype html>
+<html>
+  <head>
+    <title>[WIP] Hotel-Spider CRS API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>[WIP] Hotel-Spider CRS API</h1>
+    <div class="app-desc">[DRAFT] Here is the documentation of the Hotel-Spider CRS API version 2. An API key is mandatory for each call described below. [/DRAFT]</div>
+    <div class="app-desc">More information: <a href=""></a></div>
+    <div class="app-desc">Contact Info: <a href="dev@hotel-spider.ch">dev@hotel-spider.ch</a></div>
+    <div class="app-desc">Version: 2.0</div>
+    <div class="app-desc">BasePath:/v2</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+    <ol>
+      <li>APIKey KeyParamName:api_key KeyInQuery:true KeyInHeader:false</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Availabilities">Availabilities</a></h4>
+  <ul>
+  <li><a href="#availabilitiesHotelIdGet"><code><span class="http-method">get</span> /availabilities/{hotelId}</code></a></li>
+  <li><a href="#availabilitiesHotelIdPost"><code><span class="http-method">post</span> /availabilities/{hotelId}</code></a></li>
+  <li><a href="#servicesLangHotelIdGet"><code><span class="http-method">get</span> /services/{lang}/{hotelId}</code></a></li>
+  </ul>
+  <h4><a href="#AvailabilitySummary">AvailabilitySummary</a></h4>
+  <ul>
+  <li><a href="#bestAvailabilitiesHotelIdGet"><code><span class="http-method">get</span> /best-availabilities/{hotelId}</code></a></li>
+  </ul>
+  <h4><a href="#CancellationPoliciesAndPenalties">CancellationPoliciesAndPenalties</a></h4>
+  <ul>
+  <li><a href="#cancelPenaltiesLangHotelIdGet"><code><span class="http-method">get</span> /cancel-penalties/{lang}/{hotelId}</code></a></li>
+  </ul>
+  <h4><a href="#DescriptiveInfo">DescriptiveInfo</a></h4>
+  <ul>
+  <li><a href="#descriptiveInfoLangHotelIdGet"><code><span class="http-method">get</span> /descriptive-info/{lang}/{hotelId}</code></a></li>
+  <li><a href="#productsLangHotelIdGet"><code><span class="http-method">get</span> /products/{lang}/{hotelId}</code></a></li>
+  </ul>
+  <h4><a href="#Reservations">Reservations</a></h4>
+  <ul>
+  <li><a href="#reservationsHotelIdActionsBookPost"><code><span class="http-method">post</span> /reservations/{hotelId}/actions/book</code></a></li>
+  <li><a href="#reservationsHotelIdActionsCancelPost"><code><span class="http-method">post</span> /reservations/{hotelId}/actions/cancel</code></a></li>
+  <li><a href="#reservationsLangHotelIdReservationIdGet"><code><span class="http-method">get</span> /reservations/{lang}/{hotelId}/{reservationId}</code></a></li>
+  </ul>
+
+  <h1><a name="Availabilities">Availabilities</a></h1>
+  <div class="method"><a name="availabilitiesHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /availabilities/{hotelId}</code></pre></div>
+    <div class="method-summary">returns the available products for the given search parameters (<span class="nickname">availabilitiesHotelIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">start (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Start date of the stay (date of arrival) format: date</div><div class="param">end (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; End date of the stay (date of departure) format: date</div><div class="param">nbAdults (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of adults for the stay </div><div class="param">nbChildren (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of children for the stay </div><div class="param">nbInfants (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of infants for the stay </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#AvailabilityResults">AvailabilityResults</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Availability info
+        <a href="#AvailabilityResults">AvailabilityResults</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="availabilitiesHotelIdPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /availabilities/{hotelId}</code></pre></div>
+    <div class="method-summary">check the availability of a product at specific date (<span class="nickname">availabilitiesHotelIdPost</span>)</div>
+    <div class="method-notes">Before a user starts to enter his credit card details, you can check that the selected product is still available. This can be done using this call.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">RoomStay <a href="#RoomStay">RoomStay</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; RoomStay data with associated services to be checked </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#AvailabilityCheckResult">AvailabilityCheckResult</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "correlationId" : "02b5a5f00415ca61",
+  "status" : "OK"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Availability check response
+        <a href="#AvailabilityCheckResult">AvailabilityCheckResult</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="servicesLangHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /services/{lang}/{hotelId}</code></pre></div>
+    <div class="method-summary">returns the available services for the given search parameters (<span class="nickname">servicesLangHotelIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">lang (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Language </div><div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">roomId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; ID of the room type </div><div class="param">rateplanId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; ID of the rate plan </div><div class="param">start (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Start date of the stay (date of arrival) format: date</div><div class="param">end (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; End date of the stay (date of departure) format: date</div><div class="param">nbAdults (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of adults for the stay </div><div class="param">nbChildren (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of children for the stay </div><div class="param">nbInfants (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of infants for the stay </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ServiceResults">ServiceResults</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Available services
+        <a href="#ServiceResults">ServiceResults</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="AvailabilitySummary">AvailabilitySummary</a></h1>
+  <div class="method"><a name="bestAvailabilitiesHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /best-availabilities/{hotelId}</code></pre></div>
+    <div class="method-summary">returns the available products for the given period (<span class="nickname">bestAvailabilitiesHotelIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">start (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Start date of the requested timespan format: date</div><div class="param">end (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; End date of the requested timespan format: date</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#BestAvailabilityResults">BestAvailabilityResults</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Best availabilities information
+        <a href="#BestAvailabilityResults">BestAvailabilityResults</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="CancellationPoliciesAndPenalties">CancellationPoliciesAndPenalties</a></h1>
+  <div class="method"><a name="cancelPenaltiesLangHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /cancel-penalties/{lang}/{hotelId}</code></pre></div>
+    <div class="method-summary">get the cancellation penalties for a given stay (<span class="nickname">cancelPenaltiesLangHotelIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">lang (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Language </div><div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">roomId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; ID of the room type </div><div class="param">rateplanId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; ID of the rate plan </div><div class="param">start (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Start date of the stay (date of arrival) format: date</div><div class="param">end (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; End date of the stay (date of departure) format: date</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#CancelPenalties">CancelPenalties</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>"Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking."</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Return a summary of the cancellation penalties that applies to the specified product at the specified dates
+        <a href="#CancelPenalties">CancelPenalties</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="DescriptiveInfo">DescriptiveInfo</a></h1>
+  <div class="method"><a name="descriptiveInfoLangHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /descriptive-info/{lang}/{hotelId}</code></pre></div>
+    <div class="method-summary">returns the descriptive info for a given hotel (<span class="nickname">descriptiveInfoLangHotelIdGet</span>)</div>
+    <div class="method-notes"><p>For more information about the code used in the returned data, please see the links below:</p>
+<ul>
+<li>for the hotel services/amenities see the <a href="https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325557/Hotel+Amenity+Code+HAC">Hotel Amenity Code (HAC)</a> list</li>
+<li>for the room amenities see the <a href="https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325585/Room+Amenity+Type+RMA">Room Amenity Type (RMA)</a> list</li>
+</ul>
+</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">lang (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Language </div><div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#HotelDescriptiveInfo">HotelDescriptiveInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "hotelInfo" : {
+    "whenBuilt" : "1969",
+    "position" : {
+      "altitude" : 150.0,
+      "latitude" : 47.444546,
+      "longitude" : 4.161718
+    },
+    "services" : [ "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]", "[{\"code\":5,\"codeDetails\":\"Air conditioning\"},{\"code\":54,\"codeDetails\":\"Indoor pool\"}]" ],
+    "descriptions" : {
+      "multimediadescriptions" : [ {
+        "images" : [ {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        }, {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        } ],
+        "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+      }, {
+        "images" : [ {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        }, {
+          "imageWidth" : 350,
+          "imageId" : "00L55eee8ef46e5b",
+          "imageUrl" : "http://images.example.com/00L55eee8ef46e5b.jpg",
+          "sort" : 1,
+          "dimensionCategory" : "Mobile",
+          "imageHeight" : 150
+        } ],
+        "texts" : [ "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]", "[{\"detailsCode\":2,\"text\":\"This is the property description\"},{\"detailsCode\":71,\"text\":\"This is the restaurant description\"}]" ]
+      } ]
+    }
+  },
+  "facilityInfo" : {
+    "guestRooms" : [ {
+      "id" : "00U5846e022f2911",
+      "roomTypeName" : "Junior Suite",
+      "minOccupancy" : 1,
+      "maxOccupancy" : 2,
+      "maxChildOccupancy" : 1,
+      "maxAdultOccupancy" : 2,
+      "typeRoom" : {
+        "standardOccupancy" : 1,
+        "standardNumBeds" : 1,
+        "maxCribs" : 1,
+        "maxRollaways" : 0,
+        "composite" : false,
+        "quantity" : 26
+      },
+      "amenities" : [ {
+        "roomAmenityCode" : 2,
+        "codeDetails" : "Air conditioning"
+      }, {
+        "roomAmenityCode" : 55,
+        "codeDetails" : "Iron"
+      } ],
+      "multimediaDescriptions" : {
+        "images" : [ {
+          "imageId" : "00U5846e022f2915",
+          "imageUrl" : "http://images.example.com/00U5846e022f2915.jpg",
+          "imageWidth" : 1920,
+          "imageHeight" : 1080,
+          "dimensionCategory" : "Desktop"
+        }, {
+          "imageId" : "00U5846e022e4567",
+          "imageUrl" : "http://images.example.com/00U5846e022e4567.jpg",
+          "imageWidth" : 720,
+          "imageHeight" : 480,
+          "dimensionCategory" : "Mobile"
+        }, {
+          "imageId" : "00U5846e022f2916",
+          "imageUrl" : "http://images.example.com/00U5846e022f2916.jpg",
+          "imageWidth" : 1920,
+          "imageHeight" : 1080,
+          "dimensionCategory" : "Desktop"
+        } ]
+      }
+    }, {
+      "id" : "00U5846e022f2912",
+      "roomTypeName" : "Double deluxe",
+      "minOccupancy" : 1,
+      "maxOccupancy" : 3,
+      "maxChildOccupancy" : 2,
+      "maxAdultOccupancy" : 3,
+      "typeRoom" : {
+        "standardOccupancy" : 2,
+        "standardNumBeds" : 1,
+        "maxCribs" : 1,
+        "maxRollaways" : 0,
+        "composite" : false,
+        "quantity" : 14
+      }
+    } ]
+  },
+  "affiliationInfo" : {
+    "awards" : [ {
+      "provider" : "HotelAssociation",
+      "rating" : 3
+    }, {
+      "provider" : "TripAdvisor",
+      "rating" : 3.5
+    } ]
+  },
+  "weightUnitOfMeasureCode" : 16,
+  "contactInfos" : [ {
+    "emails" : [ {
+      "email" : "first.last@example.com"
+    }, {
+      "email" : "first.last@example.com"
+    } ],
+    "addresses" : [ {
+      "stateProv" : "Wallis",
+      "cityName" : "Zermatt",
+      "postalCode" : "3920",
+      "countryName" : "Schweiz",
+      "addressLine" : "Matterstrasse",
+      "streetNmbr" : 43
+    }, {
+      "stateProv" : "Wallis",
+      "cityName" : "Zermatt",
+      "postalCode" : "3920",
+      "countryName" : "Schweiz",
+      "addressLine" : "Matterstrasse",
+      "streetNmbr" : 43
+    } ],
+    "companyName" : "Test Hotel gmbH",
+    "phones" : [ {
+      "phoneTechType" : 1,
+      "phoneNumber" : "279556655",
+      "countryAccessCode" : "41"
+    }, {
+      "phoneTechType" : 1,
+      "phoneNumber" : "279556655",
+      "countryAccessCode" : "41"
+    } ]
+  }, {
+    "emails" : [ {
+      "email" : "first.last@example.com"
+    }, {
+      "email" : "first.last@example.com"
+    } ],
+    "addresses" : [ {
+      "stateProv" : "Wallis",
+      "cityName" : "Zermatt",
+      "postalCode" : "3920",
+      "countryName" : "Schweiz",
+      "addressLine" : "Matterstrasse",
+      "streetNmbr" : 43
+    }, {
+      "stateProv" : "Wallis",
+      "cityName" : "Zermatt",
+      "postalCode" : "3920",
+      "countryName" : "Schweiz",
+      "addressLine" : "Matterstrasse",
+      "streetNmbr" : 43
+    } ],
+    "companyName" : "Test Hotel gmbH",
+    "phones" : [ {
+      "phoneTechType" : 1,
+      "phoneNumber" : "279556655",
+      "countryAccessCode" : "41"
+    }, {
+      "phoneTechType" : 1,
+      "phoneNumber" : "279556655",
+      "countryAccessCode" : "41"
+    } ]
+  } ],
+  "policies" : {
+    "policyInfo" : {
+      "maxChildAge" : 12.0,
+      "minChildAge" : 2.0
+    }
+  },
+  "timeZone" : "Europe/Zurich",
+  "hotelId" : "00U5846e022f291e",
+  "areaUnitOfMeasureCode" : 14,
+  "hotelName" : "Test hotel",
+  "currencyCode" : "CHF",
+  "distanceUnitOfMeasureCode" : 2
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hotel descriptive info
+        <a href="#HotelDescriptiveInfo">HotelDescriptiveInfo</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="productsLangHotelIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/{lang}/{hotelId}</code></pre></div>
+    <div class="method-summary">returns the products sold by a given hotel (<span class="nickname">productsLangHotelIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">lang (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Language </div><div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#HotelProducts">HotelProducts</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hotel products list
+        <a href="#HotelProducts">HotelProducts</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Reservations">Reservations</a></h1>
+  <div class="method"><a name="reservationsHotelIdActionsBookPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /reservations/{hotelId}/actions/book</code></pre></div>
+    <div class="method-summary">make a reservation (<span class="nickname">reservationsHotelIdActionsBookPost</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Reservation <a href="#ReservationRequest">ReservationRequest</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Information about the reservation to be booked </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="reservationsHotelIdActionsCancelPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /reservations/{hotelId}/actions/cancel</code></pre></div>
+    <div class="method-summary">cancel a reservation (<span class="nickname">reservationsHotelIdActionsCancelPost</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="reservationsLangHotelIdReservationIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /reservations/{lang}/{hotelId}/{reservationId}</code></pre></div>
+    <div class="method-summary">get a specific reservation (<span class="nickname">reservationsLangHotelIdReservationIdGet</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">lang (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Language </div><div class="param">hotelId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the hotel </div><div class="param">reservationId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the reservation </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Reservation">Reservation</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "lastModifyDateTime" : "2015-09-08T13:11:31.2567097+00:00",
+  "roomStays" : [ {
+    "total" : {
+      "amountAfterTax" : 340.6,
+      "currencyCode" : "CHF"
+    },
+    "cancelPenalties" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking.",
+    "resGuestRphs" : [ 1 ],
+    "ratePlanId" : "01n576bcf7dadcba",
+    "rates" : [ {
+      "date" : "2015-12-02",
+      "amountAfterTax" : 170.3,
+      "currencyCode" : "CHF"
+    }, {
+      "date" : "2015-12-03",
+      "amountAfterTax" : 170.3,
+      "currencyCode" : "CHF"
+    } ],
+    "guestCounts" : [ {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    }, {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    } ],
+    "timeSpan" : {
+      "start" : "2015-12-02",
+      "end" : "2015-12-04"
+    },
+    "roomId" : "01n576bcf7daabcd",
+    "status" : "Book"
+  }, {
+    "total" : {
+      "amountAfterTax" : 340.6,
+      "currencyCode" : "CHF"
+    },
+    "cancelPenalties" : "Attention: Prepaid rate category. Booking policies differ from general hotel policy! Cancellation: Please note, if cancelled or modified, the total price of the non-refundable rate of the reservation will be charged on the credit card! Non refundable deposit of 100% of the full stay including tax is required at the time of booking.",
+    "resGuestRphs" : [ 1 ],
+    "ratePlanId" : "01n576bcf7dadcba",
+    "rates" : [ {
+      "date" : "2015-12-02",
+      "amountAfterTax" : 170.3,
+      "currencyCode" : "CHF"
+    }, {
+      "date" : "2015-12-03",
+      "amountAfterTax" : 170.3,
+      "currencyCode" : "CHF"
+    } ],
+    "guestCounts" : [ {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    }, {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    } ],
+    "timeSpan" : {
+      "start" : "2015-12-02",
+      "end" : "2015-12-04"
+    },
+    "roomId" : "01n576bcf7daabcd",
+    "status" : "Book"
+  } ],
+  "resGlobalInfo" : {
+    "total" : {
+      "amountAfterTax" : 340.6,
+      "currencyCode" : "CHF"
+    },
+    "comments" : [ "We will arrive after 20h. If possible we would prefer a room in the upper floors.", "We will arrive after 20h. If possible we would prefer a room in the upper floors." ],
+    "profiles" : [ "", "" ],
+    "guarantee" : {
+      "paymentCard" : {
+        "cardHolderName" : "Mr. John Doe",
+        "cardCode" : "AX",
+        "expireDate" : "01/18",
+        "cardNumber" : "xxxx xxxx xxxx 1110"
+      }
+    },
+    "timeSpan" : {
+      "start" : "2015-12-02",
+      "end" : "2015-12-04"
+    },
+    "guestCounts" : [ {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    }, {
+      "count" : 2,
+      "ageQualifyingCode" : 10
+    } ]
+  },
+  "hotelReservationId" : "01n576bcf7dadccb",
+  "resGuests" : [ "", "" ],
+  "status" : "Book",
+  "createDateTime" : "2015-09-08T13:11:31.2567097+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Returns the reservation object
+        <a href="#Reservation">Reservation</a>
+    <h4 class="field-label">401</h4>
+    Unauthorized - The supplied API key does not allow you to access this resource (hotel/room type/rate plan)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Resource not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Address"><code>Address</code> - </a></li>
+    <li><a href="#AvailabilityCheckResult"><code>AvailabilityCheckResult</code> - </a></li>
+    <li><a href="#AvailabilityResult"><code>AvailabilityResult</code> - </a></li>
+    <li><a href="#AvailabilityResults"><code>AvailabilityResults</code> - </a></li>
+    <li><a href="#Award"><code>Award</code> - </a></li>
+    <li><a href="#BasicService"><code>BasicService</code> - </a></li>
+    <li><a href="#BestAvailabilityResult"><code>BestAvailabilityResult</code> - </a></li>
+    <li><a href="#BestAvailabilityResults"><code>BestAvailabilityResults</code> - </a></li>
+    <li><a href="#BestAvailabilitySingleResult"><code>BestAvailabilitySingleResult</code> - </a></li>
+    <li><a href="#CancelPenalties"><code>CancelPenalties</code> - </a></li>
+    <li><a href="#ContactInfo"><code>ContactInfo</code> - </a></li>
+    <li><a href="#CurrencyCode"><code>CurrencyCode</code> - </a></li>
+    <li><a href="#Descriptions"><code>Descriptions</code> - </a></li>
+    <li><a href="#Email"><code>Email</code> - </a></li>
+    <li><a href="#GuestCount"><code>GuestCount</code> - </a></li>
+    <li><a href="#GuestRoom"><code>GuestRoom</code> - </a></li>
+    <li><a href="#HotelDescriptiveInfo"><code>HotelDescriptiveInfo</code> - </a></li>
+    <li><a href="#HotelDescriptiveInfo_affiliationInfo"><code>HotelDescriptiveInfo_affiliationInfo</code> - </a></li>
+    <li><a href="#HotelDescriptiveInfo_facilityInfo"><code>HotelDescriptiveInfo_facilityInfo</code> - </a></li>
+    <li><a href="#HotelDescriptiveInfo_policies"><code>HotelDescriptiveInfo_policies</code> - </a></li>
+    <li><a href="#HotelDescriptiveInfo_policies_policyInfo"><code>HotelDescriptiveInfo_policies_policyInfo</code> - </a></li>
+    <li><a href="#HotelInfo"><code>HotelInfo</code> - </a></li>
+    <li><a href="#HotelInfo_position"><code>HotelInfo_position</code> - </a></li>
+    <li><a href="#HotelProduct"><code>HotelProduct</code> - </a></li>
+    <li><a href="#HotelProduct_ratePlans"><code>HotelProduct_ratePlans</code> - </a></li>
+    <li><a href="#HotelProduct_roomTypes"><code>HotelProduct_roomTypes</code> - </a></li>
+    <li><a href="#HotelProducts"><code>HotelProducts</code> - </a></li>
+    <li><a href="#MultiDescription"><code>MultiDescription</code> - </a></li>
+    <li><a href="#MultimediaDescription"><code>MultimediaDescription</code> - </a></li>
+    <li><a href="#MultimediaDescription_images"><code>MultimediaDescription_images</code> - </a></li>
+    <li><a href="#MultimediaDescription_texts"><code>MultimediaDescription_texts</code> - </a></li>
+    <li><a href="#Phone"><code>Phone</code> - </a></li>
+    <li><a href="#Profile"><code>Profile</code> - </a></li>
+    <li><a href="#Reservation"><code>Reservation</code> - </a></li>
+    <li><a href="#ReservationRequest"><code>ReservationRequest</code> - </a></li>
+    <li><a href="#ReservationResGuest"><code>ReservationResGuest</code> - </a></li>
+    <li><a href="#ReservationRoomStay"><code>ReservationRoomStay</code> - </a></li>
+    <li><a href="#ReservationStatus"><code>ReservationStatus</code> - </a></li>
+    <li><a href="#Reservation_resGlobalInfo"><code>Reservation_resGlobalInfo</code> - </a></li>
+    <li><a href="#Reservation_resGlobalInfo_guarantee"><code>Reservation_resGlobalInfo_guarantee</code> - </a></li>
+    <li><a href="#Reservation_resGlobalInfo_guarantee_paymentCard"><code>Reservation_resGlobalInfo_guarantee_paymentCard</code> - </a></li>
+    <li><a href="#RoomAmenity"><code>RoomAmenity</code> - </a></li>
+    <li><a href="#RoomAvailabilityResult"><code>RoomAvailabilityResult</code> - </a></li>
+    <li><a href="#RoomRate"><code>RoomRate</code> - </a></li>
+    <li><a href="#RoomStay"><code>RoomStay</code> - </a></li>
+    <li><a href="#Service"><code>Service</code> - </a></li>
+    <li><a href="#ServiceResult"><code>ServiceResult</code> - </a></li>
+    <li><a href="#ServiceResults"><code>ServiceResults</code> - </a></li>
+    <li><a href="#TimeSpan"><code>TimeSpan</code> - </a></li>
+    <li><a href="#Total"><code>Total</code> - </a></li>
+    <li><a href="#TypeRoom"><code>TypeRoom</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Address"><code>Address</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">streetNmbr (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">addressLine (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cityName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">postalCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">stateProv (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">countryName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AvailabilityCheckResult"><code>AvailabilityCheckResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">OK</div><div class="param-enum">KO</div>
+<div class="param">correlationId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The correlation ID has to be submitted together with the reservation when done </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AvailabilityResult"><code>AvailabilityResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">rateplanId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the rate plan </div>
+<div class="param">totalPrice (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Total price for the stay format: float</div>
+<div class="param">discount (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Discount amount offered on this product format: float</div>
+<div class="param">currency (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">isBar (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether this product is the Best Available Rate or not </div>
+<div class="param">availability (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of rooms that are available through this rate </div>
+<div class="param">limitedOffer (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether this product is a limited offer or not </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AvailabilityResults"><code>AvailabilityResults</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Award"><code>Award</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">provider (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">rating (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BasicService"><code>BasicService</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">serviceId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the service </div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Price of the service format: float</div>
+<div class="param">discount (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Discount amount offered on this service format: float</div>
+<div class="param">currency (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">included (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether the service price is included in the roomstay price or not </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BestAvailabilityResult"><code>BestAvailabilityResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">arrivalDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> The following results are given for an arrival on this date format: date</div>
+<div class="param">minLOS (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minimum possible length of stay </div>
+<div class="param">maxLOS (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Maximum possible length of stay </div>
+<div class="param">stayLengths (optional)</div><div class="param-desc"><span class="param-type"><a href="#BestAvailabilitySingleResult">array[BestAvailabilitySingleResult]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BestAvailabilityResults"><code>BestAvailabilityResults</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BestAvailabilitySingleResult"><code>BestAvailabilitySingleResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">nbAdults (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">nbChildren (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">nbInfants (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">roomId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">rateCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Total price for the stay format: float</div>
+<div class="param">currency (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">quantity (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> The number of available rooms with this conditions </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CancelPenalties"><code>CancelPenalties</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ContactInfo"><code>ContactInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">companyName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">addresses (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">array[Address]</a></span>  </div>
+<div class="param">phones (optional)</div><div class="param-desc"><span class="param-type"><a href="#Phone">array[Phone]</a></span>  </div>
+<div class="param">emails (optional)</div><div class="param-desc"><span class="param-type"><a href="#Email">array[Email]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CurrencyCode"><code>CurrencyCode</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>An ISO 4217 (3) alpha character code that specifies a monetary unit.</div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Descriptions"><code>Descriptions</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">multimediadescriptions (optional)</div><div class="param-desc"><span class="param-type"><a href="#MultimediaDescription">array[MultimediaDescription]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Email"><code>Email</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GuestCount"><code>GuestCount</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">ageQualifyingCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> A code representing the age category: 10 (Adults), 8 (Children), 7 (Infants) </div>
+<div class="param">count (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GuestRoom"><code>GuestRoom</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">roomTypeName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">minOccupancy (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">maxOccupancy (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">maxChildOccupancy (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">maxAdultOccupancy (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">typeRoom (optional)</div><div class="param-desc"><span class="param-type"><a href="#TypeRoom">TypeRoom</a></span>  </div>
+<div class="param">amenities (optional)</div><div class="param-desc"><span class="param-type"><a href="#RoomAmenity">array[RoomAmenity]</a></span>  </div>
+<div class="param">multimediaDescriptions (optional)</div><div class="param-desc"><span class="param-type"><a href="#MultimediaDescription">array[MultimediaDescription]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelDescriptiveInfo"><code>HotelDescriptiveInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">hotelId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The hotel ID. </div>
+<div class="param">hotelName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The hotel name. </div>
+<div class="param">areaUnitOfMeasureCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Provides the unit of measure in which area is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM). </div>
+<div class="param">distanceUnitOfMeasureCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Provides the unit of measure in which distance is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM). </div>
+<div class="param">timeZone (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Describes the local time zone in which the hotel is located. This could include additional information regarding time zones (e.g., Daylight Saving Time observed), a proprietary code, the difference between the local time and GMT. </div>
+<div class="param">weightUnitOfMeasureCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Provides the unit of measure in which weight is provided in this message. Refer to OpenTravel Code List Unit of Measure (UOM). </div>
+<div class="param">currencyCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">hotelInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelInfo">HotelInfo</a></span>  </div>
+<div class="param">affiliationInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelDescriptiveInfo_affiliationInfo">HotelDescriptiveInfo_affiliationInfo</a></span>  </div>
+<div class="param">facilityInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelDescriptiveInfo_facilityInfo">HotelDescriptiveInfo_facilityInfo</a></span>  </div>
+<div class="param">contactInfos (optional)</div><div class="param-desc"><span class="param-type"><a href="#ContactInfo">array[ContactInfo]</a></span>  </div>
+<div class="param">policies (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelDescriptiveInfo_policies">HotelDescriptiveInfo_policies</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelDescriptiveInfo_affiliationInfo"><code>HotelDescriptiveInfo_affiliationInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Provides information regarding affiliations, loyalty programs and award ratings.The AffiliationInfo object is used to identify the brand or franchise affiliations of the hotel.</div>
+    <div class="field-items">
+      <div class="param">awards (optional)</div><div class="param-desc"><span class="param-type"><a href="#Award">array[Award]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelDescriptiveInfo_facilityInfo"><code>HotelDescriptiveInfo_facilityInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Provides information pertaining to the hotel facility itself. Describes the facilities provided at the hotel, including meeting rooms and restaurants.</div>
+    <div class="field-items">
+      <div class="param">guestRooms (optional)</div><div class="param-desc"><span class="param-type"><a href="#GuestRoom">array[GuestRoom]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelDescriptiveInfo_policies"><code>HotelDescriptiveInfo_policies</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Provides information about the hotel policies (payment, guarantees, etc.)</div>
+    <div class="field-items">
+      <div class="param">policyInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelDescriptiveInfo_policies_policyInfo">HotelDescriptiveInfo_policies_policyInfo</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelDescriptiveInfo_policies_policyInfo"><code>HotelDescriptiveInfo_policies_policyInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>General policy information</div>
+    <div class="field-items">
+      <div class="param">minChildAge (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">maxChildAge (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelInfo"><code>HotelInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Contains descriptive information about a hotel.</div>
+    <div class="field-items">
+      <div class="param">whenBuilt (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> The date that the hotel facility was built, usually just the year. format: date</div>
+<div class="param">position (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelInfo_position">HotelInfo_position</a></span>  </div>
+<div class="param">descriptions (optional)</div><div class="param-desc"><span class="param-type"><a href="#Descriptions">Descriptions</a></span>  </div>
+<div class="param">services (optional)</div><div class="param-desc"><span class="param-type"><a href="#Service">array[Service]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelInfo_position"><code>HotelInfo_position</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">altitude (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">latitude (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">longitude (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelProduct"><code>HotelProduct</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">roomTypes (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelProduct_roomTypes">array[HotelProduct_roomTypes]</a></span>  </div>
+<div class="param">ratePlans (optional)</div><div class="param-desc"><span class="param-type"><a href="#HotelProduct_ratePlans">array[HotelProduct_ratePlans]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelProduct_ratePlans"><code>HotelProduct_ratePlans</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">ratePlanCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">ratePlanName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">currencyCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">descriptions (optional)</div><div class="param-desc"><span class="param-type"><a href="#MultiDescription">array[MultiDescription]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelProduct_roomTypes"><code>HotelProduct_roomTypes</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">roomTypeCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="HotelProducts"><code>HotelProducts</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MultiDescription"><code>MultiDescription</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">texts (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">images (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">urls (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MultimediaDescription"><code>MultimediaDescription</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">images (optional)</div><div class="param-desc"><span class="param-type"><a href="#MultimediaDescription_images">array[MultimediaDescription_images]</a></span>  </div>
+<div class="param">texts (optional)</div><div class="param-desc"><span class="param-type"><a href="#MultimediaDescription_texts">array[MultimediaDescription_texts]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MultimediaDescription_images"><code>MultimediaDescription_images</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">sort (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">imageId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">imageUrl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">imageWidth (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">imageHeight (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">dimensionCategory (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Used to define the category of the image </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">Original</div><div class="param-enum">Thumbnail</div><div class="param-enum">Mobile</div><div class="param-enum">Desktop</div><div class="param-enum">Wide</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MultimediaDescription_texts"><code>MultimediaDescription_texts</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">detailsCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Used to designate a particular type of additional information. <a href="https://tourisoft.atlassian.net/wiki/spaces/HOT/pages/4325600/Additional+Detail+Type+ADT">Here is the list of the possible Additional Detail Type (ADT) values</a> </div>
+<div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Phone"><code>Phone</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">phoneTechType (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">countryAccessCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">phoneNumber (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Profile"><code>Profile</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Reservation"><code>Reservation</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">hotelReservationId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#ReservationStatus">ReservationStatus</a></span>  </div>
+<div class="param">createDateTime (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: datetime</div>
+<div class="param">lastModifyDateTime (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: datetime</div>
+<div class="param">roomStays (optional)</div><div class="param-desc"><span class="param-type"><a href="#ReservationRoomStay">array[ReservationRoomStay]</a></span>  </div>
+<div class="param">resGuests (optional)</div><div class="param-desc"><span class="param-type"><a href="#ReservationResGuest">array[ReservationResGuest]</a></span>  </div>
+<div class="param">resGlobalInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#Reservation_resGlobalInfo">Reservation_resGlobalInfo</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ReservationRequest"><code>ReservationRequest</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">guestRoomId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the selected room type </div>
+<div class="param">rateplanId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the selected rate plan </div>
+<div class="param">startDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> Start date of the stay (date of arrival) format: date</div>
+<div class="param">endDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> End date of the stay (date of departure) format: date</div>
+<div class="param">nbAdults (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of adults for the stay </div>
+<div class="param">nbChildren (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of children for the stay </div>
+<div class="param">nbInfants (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of infants for the stay </div>
+<div class="param">totalPrice (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Total price for the stay format: float</div>
+<div class="param">services (optional)</div><div class="param-desc"><span class="param-type"><a href="#BasicService">array[BasicService]</a></span>  </div>
+<div class="param">correlationId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">guestInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#ResGuest">ResGuest</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ReservationResGuest"><code>ReservationResGuest</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ReservationRoomStay"><code>ReservationRoomStay</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#ReservationStatus">ReservationStatus</a></span>  </div>
+<div class="param">roomId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">ratePlanId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">rates (optional)</div><div class="param-desc"><span class="param-type"><a href="#RoomRate">array[RoomRate]</a></span>  </div>
+<div class="param">guestCounts (optional)</div><div class="param-desc"><span class="param-type"><a href="#GuestCount">array[GuestCount]</a></span>  </div>
+<div class="param">timeSpan (optional)</div><div class="param-desc"><span class="param-type"><a href="#TimeSpan">TimeSpan</a></span>  </div>
+<div class="param">total (optional)</div><div class="param-desc"><span class="param-type"><a href="#Total">Total</a></span>  </div>
+<div class="param">cancelPenalties (optional)</div><div class="param-desc"><span class="param-type"><a href="#CancelPenalties">CancelPenalties</a></span>  </div>
+<div class="param">resGuestRphs (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">array[Integer]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ReservationStatus"><code>ReservationStatus</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Reservation_resGlobalInfo"><code>Reservation_resGlobalInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">timeSpan (optional)</div><div class="param-desc"><span class="param-type"><a href="#TimeSpan">TimeSpan</a></span>  </div>
+<div class="param">comments (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">guarantee (optional)</div><div class="param-desc"><span class="param-type"><a href="#Reservation_resGlobalInfo_guarantee">Reservation_resGlobalInfo_guarantee</a></span>  </div>
+<div class="param">total (optional)</div><div class="param-desc"><span class="param-type"><a href="#Total">Total</a></span>  </div>
+<div class="param">guestCounts (optional)</div><div class="param-desc"><span class="param-type"><a href="#GuestCount">array[GuestCount]</a></span>  </div>
+<div class="param">profiles (optional)</div><div class="param-desc"><span class="param-type"><a href="#Profile">array[Profile]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Reservation_resGlobalInfo_guarantee"><code>Reservation_resGlobalInfo_guarantee</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">paymentCard (optional)</div><div class="param-desc"><span class="param-type"><a href="#Reservation_resGlobalInfo_guarantee_paymentCard">Reservation_resGlobalInfo_guarantee_paymentCard</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Reservation_resGlobalInfo_guarantee_paymentCard"><code>Reservation_resGlobalInfo_guarantee_paymentCard</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">cardCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">AX</div><div class="param-enum">VI</div><div class="param-enum">MC</div><div class="param-enum">EC</div><div class="param-enum">DN</div><div class="param-enum">JC</div><div class="param-enum">DS</div><div class="param-enum">MA</div><div class="param-enum">BL</div><div class="param-enum">CB</div><div class="param-enum">BC</div><div class="param-enum">CU</div><div class="param-enum">TP</div>
+<div class="param">cardNumber (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">expireDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">cardHolderName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="RoomAmenity"><code>RoomAmenity</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Tangible room item(s) (e.g., newspaper) available to the guest.</div>
+    <div class="field-items">
+      <div class="param">roomAmenityCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Refer to OpenTravel Code List Room Amenity Type (RMA). </div>
+<div class="param">codeDetail (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> May be used to give further detail on the code. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="RoomAvailabilityResult"><code>RoomAvailabilityResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">guestroomId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the room type </div>
+<div class="param">products (optional)</div><div class="param-desc"><span class="param-type"><a href="#AvailabilityResult">array[AvailabilityResult]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="RoomRate"><code>RoomRate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+<div class="param">amountAfterTax (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">currencyCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="RoomStay"><code>RoomStay</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">guestRoomId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the selected room type </div>
+<div class="param">rateplanId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the selected rate plan </div>
+<div class="param">startDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> Start date of the stay (date of arrival) format: date</div>
+<div class="param">endDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> End date of the stay (date of departure) format: date</div>
+<div class="param">nbAdults (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of adults for the stay </div>
+<div class="param">nbChildren (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of children for the stay </div>
+<div class="param">nbInfants (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of infants for the stay </div>
+<div class="param">totalPrice (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Total price for the stay format: float</div>
+<div class="param">services (optional)</div><div class="param-desc"><span class="param-type"><a href="#BasicService">array[BasicService]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Service"><code>Service</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The code for a service or amenity. Refer to OpenTravel Code List Hotel Amenity Code (HAC). </div>
+<div class="param">codeDetails (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> May be used to give further detail on the code. (Information about which list the code refers to) </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ServiceResult"><code>ServiceResult</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">serviceId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of the service </div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Price of the service format: float</div>
+<div class="param">discount (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> Discount amount offered on this service format: float</div>
+<div class="param">currency (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+<div class="param">included (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether the service price is included in the roomstay price or not </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name of the service </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Description of the service </div>
+<div class="param">pictures (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Pictures of the service (array of URLs) </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ServiceResults"><code>ServiceResults</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TimeSpan"><code>TimeSpan</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">start (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+<div class="param">end (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Total"><code>Total</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">amountAfterTax (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">currencyCode (optional)</div><div class="param-desc"><span class="param-type"><a href="#CurrencyCode">CurrencyCode</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TypeRoom"><code>TypeRoom</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">standardOccupancy (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Indicates the usual number of guests that occupy this room. </div>
+<div class="param">standardNumBeds (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">maxCribs (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">maxRollaways (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">composite (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Indicates that the room (suite) is a composite of smaller units. </div>
+<div class="param">quantity (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Defines the number of the item in question. Used for Numeric values, from 1 to 9999 inclusive. </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
