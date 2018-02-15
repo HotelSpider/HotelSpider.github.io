@@ -1327,42 +1327,51 @@
         "guestRoomId" : {
           "type" : "string",
           "description" : "ID of the selected room type"
+		  "example" : "01W5833ffc2d3d32"
         },
         "rateplanId" : {
           "type" : "string",
           "description" : "ID of the selected rate plan"
+		  "example" : "01W5834016075d33"
         },
         "startDate" : {
           "type" : "string",
           "format" : "date",
           "description" : "Start date of the stay (date of arrival)"
+		  "example" : "2018-06-16"
         },
         "endDate" : {
           "type" : "string",
           "format" : "date",
           "description" : "End date of the stay (date of departure)"
+		  "example" : "2018-06-18"
         },
         "nbAdults" : {
           "type" : "integer",
           "description" : "Number of adults for the stay"
+		  "example" : "2"
         },
         "nbChildren" : {
           "type" : "integer",
           "description" : "Number of children for the stay"
+		  "example" : "1"
         },
         "nbInfants" : {
           "type" : "integer",
           "description" : "Number of infants for the stay"
+		  "example" : "0"
         },
         "totalPrice" : {
           "type" : "number",
           "format" : "float",
           "description" : "Total price for the stay"
+		  "example" : "330.00"
         },
         "totalDiscount" : {
           "type" : "number",
           "format" : "float",
           "description" : "Total of the discounts on the stay"
+		  "example" : "22.20"
         },
         "services" : {
           "type" : "array",
@@ -1372,28 +1381,28 @@
         }
       },
       "example" : {
-        "guestRoomId" : "guestRoomId",
-        "endDate" : "2000-01-23",
-        "totalPrice" : 5.962134,
-        "nbChildren" : 6,
-        "nbInfants" : 1,
-        "totalDiscount" : 5.637377,
-        "rateplanId" : "rateplanId",
-        "nbAdults" : 0,
+        "guestRoomId" : "01W5833ffc2d3d32",
+        "rateplanId" : "01W5834016075d33",
+        "startDate" : "2018-06-16",
+        "endDate" : "2018-06-18",
+        "nbAdults" : 2,
+        "nbChildren" : 1,
+        "nbInfants" : 10,
+        "totalPrice" : 330.00,
+        "totalDiscount" : 22.20,
         "services" : [ {
-          "price" : 2.302136,
-          "discount" : 7.0614014,
+          "serviceId" : "01W5834018479b73",
+          "price" : 25.00,
+          "discount" : 0,
           "currency" : "CHF",
-          "serviceId" : "serviceId",
           "included" : true
         }, {
-          "price" : 2.302136,
-          "discount" : 7.0614014,
+          "serviceId" : "01W58b92adc96446",
+          "price" : 19.50,
+          "discount" : 4.50,
           "currency" : "CHF",
-          "serviceId" : "serviceId",
-          "included" : true
-        } ],
-        "startDate" : "2000-01-23"
+          "included" : false
+        } ]
       }
     },
     "AvailabilityCheckResult" : {
